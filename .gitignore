@@ -4,3 +4,5 @@ db.sqlite3
 core/__pycache__/
 
 core/migrations/__pycache__/
+
+settings/__pycache__/
