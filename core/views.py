@@ -1,7 +1,8 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from core import models, serializers
+from core import filters, models, serializers
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -11,11 +12,15 @@ class BaseViewSet(viewsets.ModelViewSet):
 class StudioViewSet(BaseViewSet):
     queryset = models.Studio.objects.all()
     serializer_class = serializers.StudioSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.StudioFilter
 
 
 class MovieViewSet(BaseViewSet):
     queryset = models.Movie.objects.all()
     serializer_class = serializers.MovieSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.MovieFilter
 
 
 class PersonViewSet(BaseViewSet):
