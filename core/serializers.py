@@ -29,6 +29,7 @@ class MovieSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation["genre"] = instance.get_genre_display()
+        representation["liked"] = instance.get_liked_display()
         representation["studio"] = instance.studio.name
 
         return representation

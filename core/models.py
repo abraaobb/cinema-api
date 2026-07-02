@@ -1,3 +1,4 @@
+from django.core import validators
 from django.db import models
 
 
@@ -28,10 +29,20 @@ class Movie(ModelBase):
         HORROR = "h", "Horror"
         SCI_FI = "s", "Sci-Fi"
 
+    class Liked(models.TextChoices):
+        LOVE = "l", "Love"
+        YES = "y", "Yes"
+        NO = "n", "No"
+
     title = models.CharField(max_length=255, unique=True, null=False)
     release_date = models.DateField()
     studio = models.ForeignKey(Studio, on_delete=models.CASCADE, related_name="movies")
     genre = models.CharField(max_length=1, null=False, choices=Genres.choices)
+    liked = models.CharField(max_length=1, null=True, choices=Liked.choices)
+    rating = models.FloatField(
+        null=True,
+        validators=[validators.MinValueValidator(0), validators.MaxValueValidator(5)],
+    )
 
     def __str__(self):
         return self.title

@@ -25,10 +25,14 @@ class MovieFilter(FilterBase):
     genre = filters.ChoiceFilter(
         field_name="genre", lookup_expr="exact", choices=models.Movie.Genres
     )
+    liked = filters.ChoiceFilter(
+        field_name="liked", lookup_expr="exact", choices=models.Movie.Liked
+    )
+    rating = filters.RangeFilter(field_name="rating", lookup_expr="range")
 
     class Meta:
         model = models.Movie
-        fields = ["title", "release_date", "studio", "genre"]
+        fields = ["title", "release_date", "studio", "genre", "liked", "rating"]
 
 
 class PersonFilter(FilterBase):
