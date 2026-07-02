@@ -22,8 +22,31 @@ class MovieFilter(FilterBase):
     title = filters.CharFilter(field_name="title", lookup_expr="icontains")
     release_date = filters.DateFilter(field_name="release_date", lookup_expr="exact")
     studio = filters.CharFilter(field_name="studio__name", lookup_expr="icontains")
-    genre = filters.ChoiceFilter(field_name="genre", lookup_expr="exact", choices=models.Movie.Genres)
+    genre = filters.ChoiceFilter(
+        field_name="genre", lookup_expr="exact", choices=models.Movie.Genres
+    )
 
     class Meta:
         model = models.Movie
         fields = ["title", "release_date", "studio", "genre"]
+
+
+class PersonFilter(FilterBase):
+    name = filters.CharFilter(field_name="name", lookup_expr="icontains")
+    birth_date = filters.DateFilter(field_name="birth_date", lookup_expr="exact")
+    type = filters.ChoiceFilter(
+        field_name="type", lookup_expr="exact", choices=models.Person.Types
+    )
+
+    class Meta:
+        model = models.Person
+        fields = ["name", "birth_date", "type"]
+
+
+class MoviePersonFilter(FilterBase):
+    movie = filters.CharFilter(field_name="movie__title", lookup_expr="icontains")
+    person = filters.CharFilter(field_name="person__name", lookup_expr="icontains")
+
+    class Meta:
+        model = models.MoviePerson
+        fields = ["movie", "person"]
